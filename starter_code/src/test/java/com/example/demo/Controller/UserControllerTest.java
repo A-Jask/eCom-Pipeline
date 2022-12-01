@@ -62,6 +62,19 @@ public class UserControllerTest {
     }
 
     @Test
+    public void createUserFail() throws Exception{
+        when(encoder.encode("ad")).thenReturn("thisIsHashed");
+        CreateUserRequest user= new CreateUserRequest();
+        user.setUsername("Grasshopper");
+        user.setPassword("ad");
+        user.setConfirmPassword("ad");
+
+        final ResponseEntity<User> userResponseEntity = userController.createUser(user);
+        assertNotNull(userResponseEntity);
+        assertEquals(400, userResponseEntity.getStatusCodeValue());
+    }
+
+    @Test
     public void findUserByName() throws Exception{
         User user = new User();
         user.setUsername("Grasshopper");
